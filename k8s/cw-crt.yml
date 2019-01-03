@@ -1,0 +1,13 @@
+apiVersion: voyager.appscode.com/v1beta1
+kind: Certificate
+metadata:
+  name: crt
+  namespace: cw
+spec:
+  domains:
+  - '*.mozilla-slack.app'
+  acmeUserSecretName: tls-email
+  challengeProvider:
+    dns:
+      provider: route53
+      credentialSecretName: tls-aws
