@@ -10,6 +10,7 @@ spec:
   tls:
   - hosts:
     - 'nginx.mozilla-slack.app'
+    - 'hello-world.mozilla-slack.app'
     ref:
       kind: Secret
       name: tls-crt
@@ -20,4 +21,11 @@ spec:
       - backend:
           serviceName: nginx
           servicePort: 80
+        path: /
+  - host: 'hello-world.mozilla-slack.app'
+    http:
+      paths:
+      - backend:
+          serviceName: hello-world
+          servicePort: 8080
         path: /
