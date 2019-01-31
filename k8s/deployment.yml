@@ -1,0 +1,40 @@
+---
+# kubetpl:syntax:$
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: $APP_PROJNAME
+  namespace: $APP_NAMESPACE
+  labels:
+    app: $APP_PROJNAME
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: $APP_PROJNAME
+  template:
+    metadata:
+      labels:
+        app: $APP_PROJNAME
+    spec:
+      containers:
+        - name: $APP_PROJNAME
+          image: "itcw/${APP_PROJNAME}_bot:$APP_TAGNAME"
+          imagePullPolicy: $APP_PULLPOLICY
+          resources:
+            requests:
+              memory: 512Mi
+            limits:
+              memory: 1Gi
+          ports:
+            - containerPort: 8889
+          env:
+            - name: FOO
+              value: BAR
+          volumeMounts:
+            - name: $APP_PROJNAME-env
+              mountPath: $WORKDIR/.env
+      volumes:
+        - name: $APP_PROJNAME-env
+          secret:
+            secretName: $APP_PROJNAME-env
