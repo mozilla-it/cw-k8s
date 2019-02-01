@@ -1,4 +1,5 @@
 ---
+# kubetpl:syntax:$
 apiVersion: v1
 kind: Service
 metadata:
