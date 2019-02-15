@@ -1,0 +1,53 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: newbie-dev
+  name: newbie-dev
+  namespace: cw
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: newbie-dev
+  template:
+    metadata:
+      labels:
+        app: newbie-dev
+    spec:
+      containers:
+      - image: itcw/newbie_bot:v0.1-1-dev
+        imagePullPolicy: Always
+        name: newbie-bot
+        ports:
+        - containerPort: 5000
+        resources:
+          limits:
+            memory: 1Gi
+          requests:
+            memory: 512Mi
+        volumeMounts:
+        - mountPath: /usr/src/env
+          name: env
+      - image: itcw/newbie_db:v0.1-1-dev
+        imagePullPolicy: Always
+        name: newbie-db
+        ports:
+        - containerPort: 5432
+        resources:
+          limits:
+            memory: 1Gi
+          requests:
+            memory: 512Mi
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: db-storage
+      terminationGracePeriodSeconds: 90
+      volumes:
+      - name: env
+        secret:
+          secretName: env
+      - name: db-storage
+        persistentVolumeClaim:
+          claimName: newbie-db-dev

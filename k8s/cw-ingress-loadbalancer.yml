@@ -12,6 +12,8 @@ spec:
     - 'nginx.mozilla-slack.app'
     - 'hello-world.mozilla-slack.app'
     - 'props.mozilla-slack.app'
+    - 'newbie-stage.mozilla-slack.app'
+    - 'newbie-dev.mozilla-slack.app'
     ref:
       kind: Secret
       name: tls-crt
@@ -36,4 +38,18 @@ spec:
       - backend:
           serviceName: props
           servicePort: 8080
+        path: /
+  - host: 'newbie-stage.mozilla-slack.app'
+    http:
+      paths:
+      - backend:
+          serviceName: newbie-stage
+          servicePort: 443
+        path: /
+  - host: 'newbie-dev.mozilla-slack.app'
+    http:
+      paths:
+      - backend:
+          serviceName: newbie-dev
+          servicePort: 443
         path: /

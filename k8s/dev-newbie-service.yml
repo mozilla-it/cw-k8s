@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: newbie-dev
+  namespace: cw
+  labels:
+    app: newbie-dev
+spec:
+  ports:
+  - port: 443
+    targetPort: 5000
+  selector:
+    app: newbie-dev
