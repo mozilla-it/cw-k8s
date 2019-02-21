@@ -17,7 +17,7 @@ spec:
         app: newbie-stage
     spec:
       containers:
-      - image: itcw/newbie_bot:v0.1-dev
+      - image: itcw/newbie_bot:v0.2-dev
         imagePullPolicy: Always
         name: newbie-bot
         ports:
@@ -30,7 +30,7 @@ spec:
         volumeMounts:
         - mountPath: /usr/src/env
           name: env
-      - image: itcw/newbie_db:v0.1-dev
+      - image: itcw/newbie_db:v0.2-dev
         imagePullPolicy: Always
         name: newbie-db
         ports:
