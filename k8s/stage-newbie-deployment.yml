@@ -40,13 +40,13 @@ spec:
             memory: 1Gi
           requests:
             memory: 512Mi
-        volumeMounts:
-        - mountPath: /var/lib/postgresql/data
-          name: db-storage
+#        volumeMounts:
+#        - mountPath: /var/lib/postgresql/data
+#          name: db-storage
       volumes:
       - name: env
         secret:
           secretName: env
-      - name: db-storage
-        persistentVolumeClaim:
-          claimName: newbie-db-stage
+#      - name: db-storage
+#        persistentVolumeClaim:
+#          claimName: newbie-db-stage
