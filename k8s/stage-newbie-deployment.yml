@@ -4,7 +4,8 @@ kind: Deployment
 metadata:
   labels:
     app: newbie-stage
-  name: newbie-stage
+    role: frontend
+  name: newbie-bot-stage
   namespace: cw
 spec:
   replicas: 1
@@ -15,11 +16,14 @@ spec:
     metadata:
       labels:
         app: newbie-stage
+        role: frontend
     spec:
+      hostname: bot
+      subdomain: newbie-stage
       containers:
       - image: itcw/newbie_bot:v0.2-dev
         imagePullPolicy: Always
-        name: newbie-bot
+        name: bot
         ports:
         - containerPort: 5000
         resources:
@@ -30,9 +34,37 @@ spec:
         volumeMounts:
         - mountPath: /usr/src/env
           name: env
+      terminationGracePeriodSeconds: 90
+      volumes:
+      - name: env
+        secret:
+          secretName: newbie-stage
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: newbie-stage
+    role: backend
+  name: newbie-db-stage
+  namespace: cw
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: newbie-stage
+  template:
+    metadata:
+      labels:
+        app: newbie-stage
+        role: backend
+    spec:
+      hostname: db
+      subdomain: newbie-stage
+      containers:
       - image: itcw/newbie_db:v0.2-dev
         imagePullPolicy: Always
-        name: newbie-db
+        name: db
         ports:
         - containerPort: 5432
         resources:
@@ -40,13 +72,11 @@ spec:
             memory: 1Gi
           requests:
             memory: 512Mi
-#        volumeMounts:
-#        - mountPath: /var/lib/postgresql/data
-#          name: db-storage
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: db-storage
+      terminationGracePeriodSeconds: 90
       volumes:
-      - name: env
-        secret:
-          secretName: env
-#      - name: db-storage
-#        persistentVolumeClaim:
-#          claimName: newbie-db-stage
+      - name: db-storage
+        persistentVolumeClaim:
+          claimName: newbie-db-stage

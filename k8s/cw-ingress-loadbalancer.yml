@@ -12,6 +12,7 @@ spec:
     - 'nginx.mozilla-slack.app'
     - 'hello-world.mozilla-slack.app'
     - 'props.mozilla-slack.app'
+    - 'newbie.mozilla-slack.app'
     - 'newbie-stage.mozilla-slack.app'
     - 'newbie-dev.mozilla-slack.app'
     ref:
@@ -39,17 +40,24 @@ spec:
           serviceName: props
           servicePort: 8080
         path: /
+  - host: 'newbie.mozilla-slack.app'
+    http:
+      paths:
+      - backend:
+          serviceName: newbie-bot
+          servicePort: 443
+        path: /
   - host: 'newbie-stage.mozilla-slack.app'
     http:
       paths:
       - backend:
-          serviceName: newbie-stage
+          serviceName: newbie-bot-stage
           servicePort: 443
         path: /
   - host: 'newbie-dev.mozilla-slack.app'
     http:
       paths:
       - backend:
-          serviceName: newbie-dev
+          serviceName: newbie-bot-dev
           servicePort: 443
         path: /

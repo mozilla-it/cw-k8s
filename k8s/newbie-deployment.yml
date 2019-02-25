@@ -3,33 +3,29 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: newbie-dev
+    app: newbie
     role: frontend
-  name: newbie-bot-dev
+  name: newbie-bot
   namespace: cw
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: newbie-dev
+      app: newbie
   template:
     metadata:
       labels:
-        app: newbie-dev
+        app: newbie
         role: frontend
     spec:
       hostname: bot
-      subdomain: newbie-dev
+      subdomain: newbie
       containers:
-      - image: itcw/newbie_bot:v0.2-dev
+      - image: itcw/newbie_bot:v0.2
         imagePullPolicy: Always
         name: bot
         ports:
         - containerPort: 5000
-# DEBUG: Enable these lines if you need to make the container 
-#        stop terminating on failure (overrides CMD in Dockerfile)
-#        command: [ "sleep" ]
-#        args: [ "infinity" ]
         resources:
           limits:
             memory: 1Gi
@@ -42,31 +38,31 @@ spec:
       volumes:
       - name: env
         secret:
-          secretName: newbie-dev
+          secretName: newbie
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: newbie-dev
+    app: newbie
     role: backend
-  name: newbie-db-dev
+  name: newbie-db
   namespace: cw
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: newbie-dev
+      app: newbie
   template:
     metadata:
       labels:
-        app: newbie-dev
+        app: newbie
         role: backend
     spec:
       hostname: db
-      subdomain: newbie-dev
+      subdomain: newbie
       containers:
-      - image: itcw/newbie_db:v0.2-dev
+      - image: itcw/newbie_db:v0.2
         imagePullPolicy: Always
         name: db
         ports:
@@ -83,4 +79,4 @@ spec:
       volumes:
       - name: db-storage
         persistentVolumeClaim:
-          claimName: newbie-db-dev
+          claimName: newbie-db

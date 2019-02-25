@@ -2,33 +2,33 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: newbie-bot-stage
+  name: newbie-bot
   namespace: cw
   labels:
-    app: newbie-stage
+    app: newbie
     role: frontend
 spec:
   ports:
   - port: 443
     targetPort: 5000
   selector: {
-    app: newbie-stage,
+    app: newbie,
     role: frontend,
   }
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: newbie-db-stage
+  name: newbie-db
   namespace: cw
   labels:
-    app: newbie-stage
+    app: newbie
     role: backend
 spec:
   ports:
   - port: 5432
     targetPort: 5432
   selector: {
-    app: newbie-stage,
+    app: newbie,
     role: backend,
   }
