@@ -1,18 +1,3 @@
-kind: PersistentVolume
-apiVersion: v1
-metadata:
-  name: newbie-db-dev
-  labels:
-    type: amazonEBS
-spec:
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteOnce
-  awsElasticBlockStore:
-    volumeID: vol-0b028a5820ef9a04a
-    fsType: ext4
-
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
