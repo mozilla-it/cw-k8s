@@ -21,7 +21,7 @@ spec:
       hostname: bot
       subdomain: newbie-stage
       containers:
-      - image: itcw/newbie_bot:v0.2-dev
+      - image: itcw/newbie_bot:v0.2-stage
         imagePullPolicy: Always
         name: bot
         ports:
@@ -62,7 +62,7 @@ spec:
       hostname: db
       subdomain: newbie-stage
       containers:
-      - image: itcw/newbie_db:v0.2-dev
+      - image: itcw/newbie_db:v0.2-stage
         imagePullPolicy: Always
         name: db
         ports:
