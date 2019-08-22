@@ -4,6 +4,7 @@ metadata:
   name: crt
   namespace: cw
 spec:
+  renewalBufferDays: 20
   domains:
   - '*.mozilla-slack.app'
   acmeUserSecretName: tls-email
