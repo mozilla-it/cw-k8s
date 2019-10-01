@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: newbie-bot-dev
+  name: newbie-bot
   namespace: cw
   labels:
-    app: newbie-dev
+    app: newbie
     role: frontend
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
-    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-west-2:783633885093:certificate/b7459575-9431-476b-83aa-e1227cae9494
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-west-2:783633885093:certificate/e13e60ff-0885-42cc-b002-841bee285eb2
     service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
 spec:
   externalTrafficPolicy: Cluster
@@ -21,25 +21,8 @@ spec:
     port: 443
     targetPort: 5000
   selector: {
-    app: newbie-dev,
+    app: newbie,
     role: frontend,
   }
   sessionAffinity: None
   type: LoadBalancer
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: newbie-db-dev
-  namespace: cw
-  labels:
-    app: newbie-dev
-    role: backend
-spec:
-  ports:
-  - port: 5432
-    targetPort: 5432
-  selector: {
-    app: newbie-dev,
-    role: backend,
-  }
