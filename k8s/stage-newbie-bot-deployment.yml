@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: newbie-stage
+    role: frontend
+  name: newbie-bot-stage
+  namespace: cw
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: newbie-stage
+  template:
+    metadata:
+      labels:
+        app: newbie-stage
+        role: frontend
+    spec:
+      hostname: bot
+      subdomain: newbie-stage
+      containers:
+      - image: itcw/newbie_bot:v0.2-46-g24e96ee
+        imagePullPolicy: Always
+        name: bot
+        ports:
+        - containerPort: 5000
+        resources:
+          limits:
+            memory: 1Gi
+          requests:
+            memory: 512Mi
+        volumeMounts:
+        - mountPath: /usr/src/env
+          name: env
+      terminationGracePeriodSeconds: 90
+      volumes:
+      - name: env
+        secret:
+          secretName: newbie-stage
+

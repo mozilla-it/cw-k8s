@@ -21,7 +21,7 @@ spec:
       hostname: bot
       subdomain: newbie-dev
       containers:
-      - image: itcw/newbie_bot:v0.2-dev
+      - image: itcw/newbie_bot:v0.2-46-g24e96ee
         imagePullPolicy: Always
         name: bot
         ports:
